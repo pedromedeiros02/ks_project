@@ -150,7 +150,7 @@ sub process_asm()
       $result = 0xA300 + &check_reg($args[1], "AND", $line_file)*16 + &check_reg($args[2], "AND", $line_file)*4 + &check_reg($args[3], "AND", $line_file);
     } elsif ($comm eq "or") {        
       print "line $line OR $args[1] $args[2] $args[3]\n" if ($debug);
-      $result = 0xA000 + &check_reg($args[1], "OR", $line_file)*16 + &check_reg($args[2], "OR", $line_file)*4 + &check_reg($args[3], "OR", $line_file);
+      $result = 0xA400 + &check_reg($args[1], "OR", $line_file)*16 + &check_reg($args[2], "OR", $line_file)*4 + &check_reg($args[3], "OR", $line_file);
     } else {
       print "Warning: Invalid command at line $line_file \"$command\"\n";
       print "         Memory will set to zero at address $line\n"; 
