@@ -19,6 +19,8 @@ package k_and_s_pkg is
                                     I_BRANCH,
                                     I_BZERO,
                                     I_BNEG,
+                                    I_BNZERO,
+                                    I_BNNEG,
                                     I_NOP,
                                     I_HALT);  -- Decoded instruction in decode
   component data_path
