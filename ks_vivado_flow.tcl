@@ -135,7 +135,7 @@ set proj_dir [get_property directory [current_project]]
 
 # Set project properties
 set obj [current_project]
-set_property -name "board_part" -value "digilentinc.com:nexys4_ddr:part0:1.1" -objects $obj
+#set_property -name "board_part" -value "digilentinc.com:nexys4_ddr:part0:1.1" -objects $obj
 set_property -name "default_lib" -value "xil_defaultlib" -objects $obj
 set_property -name "ip_cache_permissions" -value "read write" -objects $obj
 set_property -name "ip_output_repo" -value "$proj_dir/${project_name}.cache/ip" -objects $obj
