@@ -15,9 +15,11 @@
 -- Additional Comments: 
 --
 ----------------------------------------------------------------------------------
+-- Pedro DAvila Silva Medeiros
 library IEEE;
 use IEEE.STD_LOGIC_1164.all;
-use IEEE.STD_LOGIC_UNSIGNED.ALL; -- 
+use IEEE.STD_LOGIC_UNSIGNED.all; -- 
+use ieee.NUMERIC_STD.all;
 library work;
 use work.k_and_s_pkg.all;
 
@@ -66,7 +68,12 @@ signal sig_r, sig_rr : std_logic;
 signal Z_ULA : std_logic_vector (15 downto 0);
 signal program_counter : std_logic_vector (4 downto 0);
 signal b_program_counter : std_logic_vector (4 downto 0);
+
+
+signal operation_result : std_logic_vector (15 downto 0);
 begin
+
+    
     
     --ram_addr <= (others => '0'); -- just to avoid messaging from test... remove this line
     --instruction <= data_in;
@@ -99,13 +106,13 @@ begin
         when "101000010" =>
             decoded_instruction <= I_ADD;
             c_addr <= instruction(5 downto 4);
-            b_addr <= instruction(3 downto 2);
-            a_addr <= instruction(1 downto 0);
+            b_addr <= instruction(1 downto 0);
+            a_addr <= instruction(3 downto 2);
         when "101000100" =>
             decoded_instruction <= I_SUB;
             c_addr <= instruction(5 downto 4);
-            b_addr <= instruction(3 downto 2);
-            a_addr <= instruction(1 downto 0);
+            b_addr <= instruction(1 downto 0);
+            a_addr <= instruction(3 downto 2);
         when "101000110" =>
             decoded_instruction <= I_AND;
             c_addr <= instruction(5 downto 4);
@@ -147,7 +154,7 @@ begin
     
     Register_Bank : process(a_addr,b_addr,c_addr,write_reg_enable,bus_c,R0,R1,R2,R3,bus_a, clk)
     begin
-    --if (clk'event and clk = '1') then
+    
         if (write_reg_enable = '1') then
             case c_addr is
             when "00" =>
@@ -190,14 +197,25 @@ begin
         end case;
         
         data_out <= bus_a;
-   -- end if;
+   
     end process;
     
-    ULA : process (bus_a, bus_b,bus_c,operation)
+    ULA_OP : process (clk,bus_a,bus_b)  
+    begin
+    if (clk'event and clk = '1') then
+        if (operation = "00") then
+            operation_result <= bus_a + bus_b;
+        else
+            operation_result <= bus_a - bus_b;
+        end if;
+    end if;
+    end process;
+    
+    ULA : process (bus_a, bus_b,bus_c,operation,operation_result)
     begin
     case operation is
-    when "00" =>
-        Z_ULA <= bus_a + bus_b;
+    when "00" =>            
+        Z_ULA <= operation_result;        
         if (bus_a(15) = '0') then
             if (bus_b(15) = '0') then
                 if (bus_c(15) = '0') then
@@ -237,7 +255,7 @@ begin
         end if;
         
     when "01" =>
-        Z_ULA <= bus_a - bus_b;
+        Z_ULA <= operation_result;
         if (bus_a(15) = '0') then
             if (bus_b(15) = '0') then
                 if (bus_c(15) = '0') then
@@ -274,7 +292,7 @@ begin
                     sig_r <= '0';
                 end if;    
             end if;
-        end if;
+       end if;
         
     when "10" =>
         Z_ULA <= bus_a AND bus_b;
@@ -320,7 +338,7 @@ begin
     if (branch = '1') then
         b_program_counter <= mem_addr;
     else
-        b_program_counter <= program_counter ; --+ "00001"
+        b_program_counter <= program_counter + "00001";
     end if;
     end process;
      
@@ -328,7 +346,7 @@ begin
     begin
     if (clk'event and clk = '1') then
         if (pc_enable = '1') then
-            program_counter <= b_program_counter + "00001";
+            program_counter <= b_program_counter;-- + "00001";
         elsif
         (rst_n = '0') then
             program_counter <= "00000";    

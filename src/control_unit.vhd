@@ -15,6 +15,7 @@
 -- Additional Comments: 
 --
 ----------------------------------------------------------------------------------
+--Pedro DAvila Silva Medeiros
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
@@ -223,22 +224,22 @@ instruction_case : process (current_state)
             write_reg_enable <= '1'; 
             halt <= '0';   
         when INST_BRANCH =>
-            next_state <= PC_INC;
+            next_state <= PC_INC_R;
             ir_enable <= '0';
             addr_sel <= '0';
             c_sel <= '0';
-            pc_enable <= '0';
+            pc_enable <= '1';--
             branch <= '1';
             ram_write_enable <= '0';
             flags_reg_enable <= '0';
             write_reg_enable <= '0'; 
             halt <= '0';       
         when INST_BNEG =>
-            next_state <= PC_INC;
+            next_state <= PC_INC_R;
             ir_enable <= '0';
             addr_sel <= '0';
             c_sel <= '0';
-            pc_enable <= '0';
+            pc_enable <= '1';
             if (neg_op = '1') then
                 branch <= '1';
             else
@@ -249,11 +250,11 @@ instruction_case : process (current_state)
             write_reg_enable <= '0'; 
             halt <= '0';   
         when INST_BNNEG =>
-            next_state <= PC_INC;
+            next_state <= PC_INC_R;
             ir_enable <= '0';
             addr_sel <= '0';
             c_sel <= '0';
-            pc_enable <= '0';
+            pc_enable <= '1';
             if (neg_op = '1') then
                 branch <= '0';
             else
@@ -264,11 +265,11 @@ instruction_case : process (current_state)
             write_reg_enable <= '0'; 
             halt <= '0';   
         when INST_BZERO =>
-            next_state <= PC_INC;
+            next_state <= PC_INC_R;
             ir_enable <= '0';
             addr_sel <= '0';
             c_sel <= '0';
-            pc_enable <= '0';
+            pc_enable <= '1';
             if (zero_op = '1') then
                 branch <= '1';
             else
@@ -279,11 +280,11 @@ instruction_case : process (current_state)
             write_reg_enable <= '0'; 
             halt <= '0';   
         when INST_BNZERO =>
-            next_state <= PC_INC;
+            next_state <= PC_INC_R;
             ir_enable <= '0';
             addr_sel <= '0';
             c_sel <= '0';
-            pc_enable <= '0';
+            pc_enable <= '1';
             if (zero_op = '1') then
                 branch <= '0';
             else
