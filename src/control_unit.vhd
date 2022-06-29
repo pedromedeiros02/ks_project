@@ -71,21 +71,7 @@ PC_INC_R
 
 signal current_state : STATE;
 signal next_state : STATE;
--- signal added to test environment... remove this
---signal counter : std_logic_vector(7 downto 0);
 begin
-
---process to test environment ... remove this
-   -- main: process(clk, rst_n)
-   -- begin
-   --     if (rst_n = '0') then
-   --         counter <= (others => '0');
-    --    elsif (clk'event and clk='1') then
-    --        counter <= counter + 1;
-    --    end if;
-   -- end process main;
-  --  halt <= '1' when counter = x"5f" else '0';
--- remove until here....
 
 state_change : process (clk)
     begin
@@ -122,7 +108,6 @@ instruction_case : process (current_state)
             ram_write_enable <= '0';
             flags_reg_enable <= '0';
             write_reg_enable <= '0';
-            halt <= '0';
             case (decoded_instruction) is
             when I_NOP =>
                 next_state <= NOP_INST;
@@ -168,10 +153,7 @@ instruction_case : process (current_state)
             c_sel <= '0';
             pc_enable <= '0';
             branch <= '0';
-            ram_write_enable <= '0';
-            flags_reg_enable <= '0';
-            write_reg_enable <= '0'; 
-            halt <= '0';      
+      
         when HALT_INST =>
             halt <= '1';
             next_state <= HALT_INST; 
@@ -184,8 +166,7 @@ instruction_case : process (current_state)
             branch <= '0'; -- 0 = pc
             ram_write_enable <= '0';
             flags_reg_enable <= '0';
-            write_reg_enable <= '0'; 
-            halt <= '0';      
+            write_reg_enable <= '0';     
         when INST_LOAD_RAM =>
             next_state <= PC_INC;
             write_reg_enable <= '1'; 
@@ -198,8 +179,7 @@ instruction_case : process (current_state)
             branch <= '0';
             ram_write_enable <= '1';
             flags_reg_enable <= '0';
-            write_reg_enable <= '0'; 
-            halt <= '0';   
+            write_reg_enable <= '0';   
         when INST_MOVE =>
             next_state <= PC_INC;
             ir_enable <= '0';
@@ -210,7 +190,6 @@ instruction_case : process (current_state)
             ram_write_enable <= '0';
             flags_reg_enable <= '0';
             write_reg_enable <= '1'; 
-            halt <= '0';
             operation <= "00";   
         when INST_ARITH =>
             next_state <= PC_INC;
@@ -221,8 +200,7 @@ instruction_case : process (current_state)
             branch <= '0';
             ram_write_enable <= '0';
             flags_reg_enable <= '1';
-            write_reg_enable <= '1'; 
-            halt <= '0';   
+            write_reg_enable <= '1';  
         when INST_BRANCH =>
             next_state <= PC_INC_R;
             ir_enable <= '0';
@@ -232,8 +210,7 @@ instruction_case : process (current_state)
             branch <= '1';
             ram_write_enable <= '0';
             flags_reg_enable <= '0';
-            write_reg_enable <= '0'; 
-            halt <= '0';       
+            write_reg_enable <= '0';       
         when INST_BNEG =>
             next_state <= PC_INC_R;
             ir_enable <= '0';

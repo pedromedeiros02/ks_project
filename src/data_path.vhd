@@ -72,11 +72,7 @@ signal b_program_counter : std_logic_vector (4 downto 0);
 
 signal operation_result : std_logic_vector (15 downto 0);
 begin
-
-    
-    
     --ram_addr <= (others => '0'); -- just to avoid messaging from test... remove this line
-    --instruction <= data_in;
     IR : process(data_in, ir_enable, clk)
         begin
         if (rst_n = '1') then
@@ -93,11 +89,11 @@ begin
         when "100000010" =>
             decoded_instruction <= I_LOAD;
             c_addr <= instruction(6 downto 5);
-            mem_addr <= instruction(4 downto 0);  --ramaddr
+            mem_addr <= instruction(4 downto 0);  
         when "100000100" =>
             decoded_instruction <= I_STORE;
             a_addr <= instruction(6 downto 5);
-            mem_addr <= instruction(4 downto 0);  --ram
+            mem_addr <= instruction(4 downto 0);  
         when "100100010" =>
             decoded_instruction <= I_MOVE;
             c_addr <= instruction(1 downto 0);
@@ -126,21 +122,19 @@ begin
                          
         when "000000010" =>
             decoded_instruction <= I_BRANCH; 
-            mem_addr <= instruction(4 downto 0); --ram
+            mem_addr <= instruction(4 downto 0); 
         when "000000100" =>
             decoded_instruction <= I_BZERO;
-            mem_addr <= instruction(4 downto 0); --ram
+            mem_addr <= instruction(4 downto 0); 
         when "000000110" =>
             decoded_instruction <= I_BNEG;
-            mem_addr <= instruction(4 downto 0); --ram
+            mem_addr <= instruction(4 downto 0); 
         when "000010100" =>
             decoded_instruction <= I_BNNEG;
-            mem_addr <= instruction(4 downto 0); --ram
+            mem_addr <= instruction(4 downto 0); 
         when "000010110" =>
             decoded_instruction <= I_BNZERO;
-            mem_addr <= instruction(4 downto 0); --ram
-        --when "111111111" =>
-            --decoded_instruction <= I_HALT;
+            mem_addr <= instruction(4 downto 0); 
         
         when others =>
             if (instruction = "1111111111111111") then

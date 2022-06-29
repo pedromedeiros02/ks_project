@@ -1,0 +1,36 @@
+;  TEST 1
+;  LOAD STORE
+8105;r0 Carrega da ram para os registradores
+8126;r1
+8168;r3
+8147;r2
+0000
+0005;dados a serem carregados
+0006;
+0007;
+0008;
+826D;guarda dados dos registradores na ram
+824E
+822F
+8210
+0000;--store aqui
+0000;--
+0000;--
+0000;--
+0000
+0000
+0000
+0000
+0000
+0000
+FFFF
+0000
+0000
+0000
+0000
+0000
+0000
+0000
+0000
+; end of file
+; end of file

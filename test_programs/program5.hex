@@ -1,0 +1,36 @@
+;  TEST 5
+;  LOAD BRANCH AND OR STORE
+8105;Carrega da ram para os registradores
+8126
+8168
+8147
+0112;branch 16
+AAAA;dados a serem carregados
+ABCD;
+CCCC;
+ABCD;
+826D;guarda dados dos registradores na ram
+824E
+822F
+8210
+0000;--store aqui
+0000;--
+0000;--
+0000;--
+FFFF
+A304;and r0 r0 r1
+A42E;or r2 r2 r3
+0109; branch 9
+0000
+0000
+FFFF
+0000
+0000
+0000
+0000
+0000
+0000
+0000
+0000
+; end of file
+; end of file

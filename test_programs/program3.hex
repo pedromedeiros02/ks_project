@@ -1,0 +1,36 @@
+;  TEST 3
+;  LOAD BRANCH STORE
+8105;Carrega da ram para os registradores
+8126
+8168
+8147
+0109;branch 9
+0005;dados a serem carregados
+0006;
+0007;
+0008;
+826D;guarda dados dos registradores na ram
+824E
+822F
+8210
+0000;--endereços onde os dados são guardados
+0000;--
+0000;--
+0000;--
+0000
+0000
+0000
+0000
+0000
+0000
+FFFF
+0000
+0000
+0000
+0000
+0000
+0000
+0000
+0000
+; end of file
+; end of file
