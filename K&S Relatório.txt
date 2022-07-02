@@ -1,0 +1,19 @@
+O estado GET_INST da maquina de controle consiste em colocar o ir_enable em 1, recebendo data_in e indo para DECODE_INST no próximo estado.
+DECODE_INST decodifica os bits do data_in para encontrar o próximo estado, já selecionando o valor de operation caso o próximo estado utilize a ULA. Os próximos estados podem ser: 
+HALT_INST, INST_LOAD, INST_STORE, INST_MOVE, INST_ARITH, NOP_INST, INST_BNEG,INST_BNNEG,INST_ZERO,INST_NZERO,INST_BRANCH.
+
+HALT_INST: Permanece no estado HALT_INST e halt fica em 1.
+INST_LOAD: Seleciona endereço da ram para ler dados, então no próximo estado INST_LOAD_RAM onde recebe o dado e grava no registrador selecionado.
+INST_STORE: Grava o conteudo do registrador selecionado no endereço selecionado da ram.
+INST_MOVE: Move o dado de um registrador para o outro.
+INST_ARITH: Realiza as operações com a ula. O tipo de operação ja foi determinado no DECODE_INST. O resultado da operação vai determinar os flags.
+NOP_INST: Nada é realizado.
+
+PC_INC: Aumenta o PC e vai para PC_INC_R.
+PC_INC_R: Espera a chegada dos dados do novo endereço do PC. O próximo estado é GET_INST.
+
+As instruções abaixo vão para PC_INC_R sem passar por PC_INC:
+INST_BRANCH: Realiza um salto para o endereço selecionado.
+INST_BNEG,INST_BNNEG,INST_BZERO e INST_BNZERO: Caso o valor no registrador de flags seja condizente com a operação, realiza um salto para o endereço selecionado.
+
+Os programas utilizados para testes e os resultados estão na pasta test_programs.
